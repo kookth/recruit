@@ -44,7 +44,7 @@ public class RoomtypesMeta
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    public Texture m_texture = null;
+    [SerializeField] public Texture m_texture = null;
 
     // Start is called before the first frame update
     void Start()
@@ -61,7 +61,23 @@ public class NewBehaviourScript : MonoBehaviour
                 pData.data[i].roomtypes[j].polyGonData = ConvertPoly(pData.data[i].roomtypes[j].coordinatesBase64s);
                 //Debug.Log(pData.data[i].roomtypes[j].polyGonData.Length);
                 //Debug.Log(pData.data[i].roomtypes[j].polyGonData[0].x);
+
+
+
+
+
+
+                for(int k=0; k< pData.data[i].roomtypes[j].polyGonData.Length; k++)
+                {
+                    Debug.Log(pData.data[i].roomtypes[j].polyGonData[k].x + " : " + pData.data[i].roomtypes[j].polyGonData[k].y + " : " + pData.data[i].roomtypes[j].polyGonData[k].z);
+                }
+
+
+
+                Debug.Log("----------------------------------------------------------------------------------------------------------------------------------");
             }
+
+            Debug.Log("|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||");
         }
 
         //Debug.Log(pData.data[0].roomtypes[0].coordinatesBase64s[0].Length);
@@ -96,10 +112,23 @@ public class NewBehaviourScript : MonoBehaviour
                     indexCount++;
                 }
 
-                Vector2[] uvs = new Vector2[] { new Vector2(0f, 1f),
-                new Vector2(1f, 1f),
-                new Vector2(1f, 0f),
-                new Vector2(0f, 0f)};
+
+
+
+                Vector2[] uvs = new Vector2[pData.data[i].roomtypes[j].polyGonData.Length];
+
+                int[] temp = new int[4] { 1, 11, 10, 0};
+
+                for(int l=0; l<uvs.Length; l++)
+                {
+                    uvs[l] = new Vector2((float)(temp[l%4]/10f), (float)(temp[l % 4]%10f));
+                }
+
+
+
+
+
+
 
                 Mesh mesh = new Mesh();
 
@@ -112,9 +141,9 @@ public class NewBehaviourScript : MonoBehaviour
 
                 roomObject.GetComponent<MeshFilter>().mesh = mesh;
 
-                Material material = new Material(Shader.Find("Standard"));
-                material.SetTexture("m_tex", m_texture);
-                roomObject.GetComponent<MeshRenderer>().material = material;
+                //Material material = new Material(Shader.Find("buildingTester_d"));
+                ////material.SetTexture("_MainTex", m_texture);
+                //roomObject.GetComponent<MeshRenderer>().material = material;
 
                 //Debug.Log(pData.data[i].roomtypes[j].polyGonData.Length);
                 //Debug.Log(pData.data[i].roomtypes[j].polyGonData[0].x);
